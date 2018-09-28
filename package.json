@@ -1,0 +1,41 @@
+{
+  "name": "console-augmenter",
+  "version": "0.0.1",
+  "description": "Augments logging via the console object with log levels and other useful stuff",
+  "main": "src/main.js",
+  "author": "Ronald Toussaint",
+  "license": "AGPL-3.0",
+  "keywords": [
+    "logger",
+	"log",
+	"console"
+  ],
+  "repository": "https://github.com/rotous/console-augmenter",
+  "devDependencies": {
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "cli-watch": "^1.0.7",
+    "pre-commit": "^1.2.2",
+    "rimraf": "^2.6.2",
+    "rollup-plugin-commonjs": "8.4",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "uglify-js": "^3.4.9"
+  },
+  "scripts": {
+    "clean": "rimraf dist/*",
+    "transpile": "babel src/main.js --out-dir dist --source-maps",
+    "rollup": "rollup -c",
+    "uglify": "uglifyjs dist/bundle.js --compress --mangle --output dist/bundle.min.js --source-map \"content='dist/bundle.js.map',url='bundle.min.js.map'\"",
+    "dist": "\"$npm_execpath\" run transpile && \"$npm_execpath\" run rollup && \"$npm_execpath\" run uglify",
+    "watch:src": "\"$npm_execpath\" run watch -f 'src/*.js' -r '\"$npm_execpath\" run dist'",
+    "git:dist": "\"$npm_execpath\" run dist && git add --all dist"
+  },
+  "pre-commit": [
+    "git:dist"
+  ],
+  "dependencies": {
+    "rollup": "^0.66.2"
+  }
+}

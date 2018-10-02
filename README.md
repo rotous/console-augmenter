@@ -1,16 +1,12 @@
 # console-augmenter
 
-All modern browsers and NodeJS support the functions `console.log()`, `console.info()`,
+All modern browsers and NodeJS support the functions `console.debug()`, `console.log()`, `console.info()`,
 `console.warn()` and `console.error()`. And some browsers even have a feature to only
 show what you want in the developer tools console.
 
 This module however adds functionality to set the log level in the code. This way you can
 leave your debug logging in your code and just set another log level for your production
 build so the end user will not see the logs.
-
-In addition another method is added to the console object, called `console.debug()`. This
-makes it even easier to add debugging statements and still also use the `console.log()`
-method for things that should be logged to the end-user.
 
 ## Installation
 If you have an NPM project you can use:

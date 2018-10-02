@@ -92,7 +92,7 @@
 			},
 
 			/**
-			 * Add another logging function
+			 * Enhance the debug function
 			 * @param  {...any} args the arguments passed to the log function
 			 */
 			debug: (...args) => {
@@ -107,7 +107,7 @@
 					];
 				}
 
-				return orig.log(...args);
+				return orig.debug ? orig.debug(...args) : orig.log(...args);
 			},
 
 			/**

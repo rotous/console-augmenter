@@ -1755,11 +1755,11 @@
         },
 
         /**
-         * Add another logging function
+         * Enhance the debug function
          * @param  {...any} args the arguments passed to the log function
          */
         debug: function debug() {
-          var _orig;
+          var _orig, _orig2;
 
           for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
@@ -1773,7 +1773,7 @@
             args = ['[' + new Date().toLocaleString() + ']'].concat(_toConsumableArray(args));
           }
 
-          return (_orig = orig).log.apply(_orig, _toConsumableArray(args));
+          return orig.debug ? (_orig = orig).debug.apply(_orig, _toConsumableArray(args)) : (_orig2 = orig).log.apply(_orig2, _toConsumableArray(args));
         },
 
         /**
@@ -1781,7 +1781,7 @@
          * @param  {...any} args the arguments passed to the log function
          */
         log: function log() {
-          var _orig2;
+          var _orig3;
 
           for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
             args[_key2] = arguments[_key2];
@@ -1795,7 +1795,7 @@
             args = ['[' + new Date().toLocaleString() + ']'].concat(_toConsumableArray(args));
           }
 
-          return (_orig2 = orig).log.apply(_orig2, _toConsumableArray(args));
+          return (_orig3 = orig).log.apply(_orig3, _toConsumableArray(args));
         },
 
         /**
@@ -1803,7 +1803,7 @@
          * @param  {...any} args the arguments passed to the log function
          */
         info: function info() {
-          var _orig3;
+          var _orig4;
 
           for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
             args[_key3] = arguments[_key3];
@@ -1817,7 +1817,7 @@
             args = ['[' + new Date().toLocaleString() + ']'].concat(_toConsumableArray(args));
           }
 
-          return (_orig3 = orig).info.apply(_orig3, _toConsumableArray(args));
+          return (_orig4 = orig).info.apply(_orig4, _toConsumableArray(args));
         },
 
         /**
@@ -1825,7 +1825,7 @@
          * @param  {...any} args the arguments passed to the warn function
          */
         warn: function warn() {
-          var _orig4;
+          var _orig5;
 
           for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
             args[_key4] = arguments[_key4];
@@ -1839,7 +1839,7 @@
             args = ['[' + new Date().toLocaleString() + ']'].concat(_toConsumableArray(args));
           }
 
-          return (_orig4 = orig).warn.apply(_orig4, _toConsumableArray(args));
+          return (_orig5 = orig).warn.apply(_orig5, _toConsumableArray(args));
         },
 
         /**
@@ -1847,7 +1847,7 @@
          * @param  {...any} args the arguments passed to the error function
          */
         error: function error() {
-          var _orig5;
+          var _orig6;
 
           for (var _len5 = arguments.length, args = new Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
             args[_key5] = arguments[_key5];
@@ -1861,7 +1861,7 @@
             args = ['[' + new Date().toLocaleString() + ']'].concat(_toConsumableArray(args));
           }
 
-          return (_orig5 = orig).error.apply(_orig5, _toConsumableArray(args));
+          return (_orig6 = orig).error.apply(_orig6, _toConsumableArray(args));
         } // Overwrite the console object with our updates
 
       };

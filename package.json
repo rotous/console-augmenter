@@ -2,7 +2,7 @@
   "name": "console-augmenter",
   "version": "0.0.1",
   "description": "Augments logging via the console object with log levels and other useful stuff",
-  "main": "src/main.js",
+  "main": "dist/bundle.js",
   "author": "Ronald Toussaint",
   "license": "AGPL-3.0",
   "keywords": [

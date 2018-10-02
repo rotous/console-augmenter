@@ -1,4 +1,4 @@
-require('../../src/main.js');
+require('../../dist/bundle.js');
 
 function logSomething() {
 	// Debug logging

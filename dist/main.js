@@ -1,11 +1,14 @@
 import "core-js/modules/es6.string.iterator";
 import "core-js/modules/es6.array.from";
 import "core-js/modules/es6.regexp.to-string";
-import "core-js/modules/web.dom.iterable";
-import "core-js/modules/es6.array.iterator";
 import "core-js/modules/es6.object.keys";
 import "core-js/modules/es7.symbol.async-iterator";
 import "core-js/modules/es6.symbol";
+import "core-js/modules/web.dom.iterable";
+import "core-js/modules/es6.array.iterator";
+import "core-js/modules/es7.object.values";
+import "core-js/modules/es7.array.includes";
+import "core-js/modules/es6.string.includes";
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -25,31 +28,29 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   "use strict";
 
   var LL_0 = 0;
-  var LL_ALL = LL_0;
   var LL_1 = 1;
-  var LL_LOG = LL_1;
   var LL_2 = 2;
-  var LL_INFO = LL_2;
   var LL_3 = 3;
-  var LL_WARN = LL_3;
   var LL_4 = 4;
-  var LL_ERROR = LL_4;
   var LL_5 = 5;
-  var LL_NONE = LL_5;
+  var logLevels = {
+    LL_ALL: LL_0,
+    LL_LOG: LL_1,
+    LL_INFO: LL_2,
+    LL_WARN: LL_3,
+    LL_ERROR: LL_4,
+    LL_NONE: LL_5
+  };
   var config = {
     timestamps: false,
-    logLevel: LL_ALL
+    logLevel: logLevels.LL_ALL
   };
   var orig = null;
 
   if (console && (typeof console === "undefined" ? "undefined" : _typeof(console)) === 'object') {
     orig = _objectSpread({}, console);
-    var augmentedConsole = {
-      LL_ALL: LL_ALL,
-      LL_WARN: LL_WARN,
-      LL_ERROR: LL_ERROR,
-      LL_NONE: LL_NONE,
 
+    var augmentedConsole = _objectSpread({}, logLevels, {
       /**
        * Configure the console functions
        * @param {Object} configObj Object with the new configuration
@@ -74,9 +75,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
        * console.LL_ALL, console.LL_WARN, console.LL_ERROR, or console.LL_NONE
        */
       logLevel: function logLevel(level) {
-        if (![LL_ALL, LL_LOG, LL_INFO, LL_WARN, LL_ERROR, LL_NONE].some(function (l) {
-          return l === level;
-        })) {
+        if (!Object.values(logLevels).includes(level)) {
           // Invalid value
           console.error('Invalid log level value');
           return;
@@ -125,7 +124,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           args[_key] = arguments[_key];
         }
 
-        if (config.logLevel > LL_ALL) {
+        if (config.logLevel > logLevels.LL_ALL) {
           return;
         }
 
@@ -147,7 +146,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           args[_key2] = arguments[_key2];
         }
 
-        if (config.logLevel > LL_LOG) {
+        if (config.logLevel > logLevels.LL_LOG) {
           return;
         }
 
@@ -169,7 +168,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           args[_key3] = arguments[_key3];
         }
 
-        if (config.logLevel > LL_INFO) {
+        if (config.logLevel > logLevels.LL_INFO) {
           return;
         }
 
@@ -191,7 +190,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           args[_key4] = arguments[_key4];
         }
 
-        if (config.logLevel > LL_WARN) {
+        if (config.logLevel > logLevels.LL_WARN) {
           return;
         }
 
@@ -213,7 +212,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           args[_key5] = arguments[_key5];
         }
 
-        if (config.logLevel > LL_ERROR) {
+        if (config.logLevel > logLevels.LL_ERROR) {
           return;
         }
 
@@ -224,7 +223,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         return (_orig6 = orig).error.apply(_orig6, _toConsumableArray(args));
       } // Overwrite the console object with our updates
 
-    };
+    });
 
     for (var k in augmentedConsole) {
       console[k] = augmentedConsole[k];

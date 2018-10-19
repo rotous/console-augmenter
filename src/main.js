@@ -2,21 +2,23 @@
 	"use strict";
 
 	const LL_0 = 0;
-	const LL_ALL = LL_0;
 	const LL_1 = 1;
-	const LL_LOG = LL_1;
 	const LL_2 = 2;
-	const LL_INFO = LL_2;
 	const LL_3 = 3;
-	const LL_WARN = LL_3;
 	const LL_4 = 4;
-	const LL_ERROR = LL_4;
 	const LL_5 = 5;
-	const LL_NONE = LL_5;
+	const logLevels = {
+		LL_ALL: LL_0,
+		LL_LOG: LL_1,
+		LL_INFO: LL_2,
+		LL_WARN: LL_3,
+		LL_ERROR: LL_4,
+		LL_NONE: LL_5,
+	};
 
 	let config = {
 		timestamps: false,
-		logLevel: LL_ALL,
+		logLevel: logLevels.LL_ALL,
 	};
 
 	let orig = null;
@@ -25,10 +27,7 @@
 		orig = {...console};
 
 		const augmentedConsole = {
-			LL_ALL,
-			LL_WARN,
-			LL_ERROR,
-			LL_NONE,
+			...logLevels,
 
 			/**
 			 * Configure the console functions
@@ -53,7 +52,7 @@
 			 * console.LL_ALL, console.LL_WARN, console.LL_ERROR, or console.LL_NONE
 			 */
 			logLevel: level => {
-				if ( ![LL_ALL, LL_LOG, LL_INFO, LL_WARN, LL_ERROR, LL_NONE].some(l => l === level) ) {
+				if ( !Object.values(logLevels).includes(level) ) {
 					// Invalid value
 					console.error('Invalid log level value');
 					return;
@@ -96,7 +95,7 @@
 			 * @param  {...any} args the arguments passed to the log function
 			 */
 			debug: (...args) => {
-				if ( config.logLevel > LL_ALL ) {
+				if ( config.logLevel >logLevels.LL_ALL ) {
 					return;
 				}
 
@@ -115,7 +114,7 @@
 			 * @param  {...any} args the arguments passed to the log function
 			 */
 			log: (...args) => {
-				if ( config.logLevel > LL_LOG ) {
+				if ( config.logLevel > logLevels.LL_LOG ) {
 					return;
 				}
 
@@ -134,7 +133,7 @@
 			 * @param  {...any} args the arguments passed to the log function
 			 */
 			info: (...args) => {
-				if ( config.logLevel > LL_INFO ) {
+				if ( config.logLevel > logLevels.LL_INFO ) {
 					return;
 				}
 
@@ -153,7 +152,7 @@
 			 * @param  {...any} args the arguments passed to the warn function
 			 */
 			warn: (...args) => {
-				if ( config.logLevel > LL_WARN ) {
+				if ( config.logLevel > logLevels.LL_WARN ) {
 					return;
 				}
 
@@ -172,7 +171,7 @@
 			 * @param  {...any} args the arguments passed to the error function
 			 */
 			error: (...args) => {
-				if ( config.logLevel > LL_ERROR ) {
+				if ( config.logLevel > logLevels.LL_ERROR ) {
 					return;
 				}
 

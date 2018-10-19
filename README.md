@@ -29,8 +29,8 @@ add it to your html with:
 ```
 
 ## Usage
-When you have included the script, you can just use the functions `console.log`, `console.info`, `console.warn` and
-`console.error` just like you are used to.
+When you have included the script, you can just use the functions `console.debug`, `console.log`, `console.info`,
+`console.warn` and `console.error` just like you are used to.
 
 Change the log level of your application by calling the `logLevel()` function:
 

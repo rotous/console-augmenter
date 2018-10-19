@@ -1031,120 +1031,6 @@
     });
   }
 
-  // 22.1.3.31 Array.prototype[@@unscopables]
-  var UNSCOPABLES = require$$0$7('unscopables');
-  var ArrayProto$1 = Array.prototype;
-  if (ArrayProto$1[UNSCOPABLES] == undefined) require$$0$2(ArrayProto$1, UNSCOPABLES, {});
-  var _addToUnscopables = function (key) {
-    ArrayProto$1[UNSCOPABLES][key] = true;
-  };
-
-  var _addToUnscopables$1 = /*#__PURE__*/Object.freeze({
-    default: _addToUnscopables,
-    __moduleExports: _addToUnscopables
-  });
-
-  var _iterStep = function (done, value) {
-    return { value: value, done: !!done };
-  };
-
-  var _iterStep$1 = /*#__PURE__*/Object.freeze({
-    default: _iterStep,
-    __moduleExports: _iterStep
-  });
-
-  var addToUnscopables = ( _addToUnscopables$1 && _addToUnscopables ) || _addToUnscopables$1;
-
-  var step = ( _iterStep$1 && _iterStep ) || _iterStep$1;
-
-  // 22.1.3.4 Array.prototype.entries()
-  // 22.1.3.13 Array.prototype.keys()
-  // 22.1.3.29 Array.prototype.values()
-  // 22.1.3.30 Array.prototype[@@iterator]()
-  var es6_array_iterator = require$$0$9(Array, 'Array', function (iterated, kind) {
-    this._t = toIObject(iterated); // target
-    this._i = 0;                   // next index
-    this._k = kind;                // kind
-  // 22.1.5.2.1 %ArrayIteratorPrototype%.next()
-  }, function () {
-    var O = this._t;
-    var kind = this._k;
-    var index = this._i++;
-    if (!O || index >= O.length) {
-      this._t = undefined;
-      return step(1);
-    }
-    if (kind == 'keys') return step(0, index);
-    if (kind == 'values') return step(0, O[index]);
-    return step(0, [index, O[index]]);
-  }, 'values');
-
-  // argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
-  Iterators.Arguments = Iterators.Array;
-
-  addToUnscopables('keys');
-  addToUnscopables('values');
-  addToUnscopables('entries');
-
-  var es6_array_iterator$1 = /*#__PURE__*/Object.freeze({
-    default: es6_array_iterator,
-    __moduleExports: es6_array_iterator
-  });
-
-  var $iterators = ( es6_array_iterator$1 && es6_array_iterator ) || es6_array_iterator$1;
-
-  var ITERATOR$4 = require$$0$7('iterator');
-  var TO_STRING_TAG = require$$0$7('toStringTag');
-  var ArrayValues = Iterators.Array;
-
-  var DOMIterables = {
-    CSSRuleList: true, // TODO: Not spec compliant, should be false.
-    CSSStyleDeclaration: false,
-    CSSValueList: false,
-    ClientRectList: false,
-    DOMRectList: false,
-    DOMStringList: false,
-    DOMTokenList: true,
-    DataTransferItemList: false,
-    FileList: false,
-    HTMLAllCollection: false,
-    HTMLCollection: false,
-    HTMLFormElement: false,
-    HTMLSelectElement: false,
-    MediaList: true, // TODO: Not spec compliant, should be false.
-    MimeTypeArray: false,
-    NamedNodeMap: false,
-    NodeList: true,
-    PaintRequestList: false,
-    Plugin: false,
-    PluginArray: false,
-    SVGLengthList: false,
-    SVGNumberList: false,
-    SVGPathSegList: false,
-    SVGPointList: false,
-    SVGStringList: false,
-    SVGTransformList: false,
-    SourceBufferList: false,
-    StyleSheetList: true, // TODO: Not spec compliant, should be false.
-    TextTrackCueList: false,
-    TextTrackList: false,
-    TouchList: false
-  };
-
-  for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++) {
-    var NAME = collections[i];
-    var explicit = DOMIterables[NAME];
-    var Collection = require$$0[NAME];
-    var proto = Collection && Collection.prototype;
-    var key;
-    if (proto) {
-      if (!proto[ITERATOR$4]) require$$0$2(proto, ITERATOR$4, ArrayValues);
-      if (!proto[TO_STRING_TAG]) require$$0$2(proto, TO_STRING_TAG, NAME);
-      Iterators[NAME] = ArrayValues;
-      if (explicit) for (key in $iterators) if (!proto[key]) redefine(proto, key, $iterators[key], true);
-    }
-  }
-
   // most Object methods by ES6 should accept primitives
 
 
@@ -1299,7 +1185,7 @@
 
   var gOPS = ( _objectGops$1 && _objectGops ) || _objectGops$1;
 
-  var pIE = ( _objectPie$1 && _objectPie ) || _objectPie$1;
+  var require$$0$c = ( _objectPie$1 && _objectPie ) || _objectPie$1;
 
   // all enumerable object keys, includes symbols
 
@@ -1310,7 +1196,7 @@
     var getSymbols = gOPS.f;
     if (getSymbols) {
       var symbols = getSymbols(it);
-      var isEnum = pIE.f;
+      var isEnum = require$$0$c.f;
       var i = 0;
       var key;
       while (symbols.length > i) if (isEnum.call(it, key = symbols[i++])) result.push(key);
@@ -1351,11 +1237,11 @@
     f: f$4
   });
 
-  var require$$0$c = ( _objectGopn$1 && _objectGopn ) || _objectGopn$1;
+  var require$$0$d = ( _objectGopn$1 && _objectGopn ) || _objectGopn$1;
 
   // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 
-  var gOPN = require$$0$c.f;
+  var gOPN = require$$0$d.f;
   var toString$1 = {}.toString;
 
   var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -1391,7 +1277,7 @@
     if (IE8_DOM_DEFINE) try {
       return gOPD(O, P);
     } catch (e) { /* empty */ }
-    if (has(O, P)) return descriptor(!pIE.f.call(O, P), O[P]);
+    if (has(O, P)) return descriptor(!require$$0$c.f.call(O, P), O[P]);
   };
 
   var _objectGopd = {
@@ -1404,7 +1290,7 @@
     f: f$6
   });
 
-  var require$$0$d = ( _meta$1 && _meta ) || _meta$1;
+  var require$$0$e = ( _meta$1 && _meta ) || _meta$1;
 
   var enumKeys = ( _enumKeys$1 && _enumKeys ) || _enumKeys$1;
 
@@ -1420,7 +1306,7 @@
 
 
 
-  var META = require$$0$d.KEY;
+  var META = require$$0$e.KEY;
 
 
 
@@ -1562,8 +1448,8 @@
 
     $GOPD.f = $getOwnPropertyDescriptor;
     dP$1.f = $defineProperty;
-    require$$0$c.f = gOPNExt.f = $getOwnPropertyNames;
-    pIE.f = $propertyIsEnumerable;
+    require$$0$d.f = gOPNExt.f = $getOwnPropertyNames;
+    require$$0$c.f = $propertyIsEnumerable;
     gOPS.f = $getOwnPropertySymbols;
 
     if (require$$0$1 && !require$$0$3) {
@@ -1648,6 +1534,225 @@
   // 24.3.3 JSON[@@toStringTag]
   setToStringTag(require$$0.JSON, 'JSON', true);
 
+  // 22.1.3.31 Array.prototype[@@unscopables]
+  var UNSCOPABLES = require$$0$7('unscopables');
+  var ArrayProto$1 = Array.prototype;
+  if (ArrayProto$1[UNSCOPABLES] == undefined) require$$0$2(ArrayProto$1, UNSCOPABLES, {});
+  var _addToUnscopables = function (key) {
+    ArrayProto$1[UNSCOPABLES][key] = true;
+  };
+
+  var _addToUnscopables$1 = /*#__PURE__*/Object.freeze({
+    default: _addToUnscopables,
+    __moduleExports: _addToUnscopables
+  });
+
+  var _iterStep = function (done, value) {
+    return { value: value, done: !!done };
+  };
+
+  var _iterStep$1 = /*#__PURE__*/Object.freeze({
+    default: _iterStep,
+    __moduleExports: _iterStep
+  });
+
+  var require$$1$2 = ( _addToUnscopables$1 && _addToUnscopables ) || _addToUnscopables$1;
+
+  var step = ( _iterStep$1 && _iterStep ) || _iterStep$1;
+
+  // 22.1.3.4 Array.prototype.entries()
+  // 22.1.3.13 Array.prototype.keys()
+  // 22.1.3.29 Array.prototype.values()
+  // 22.1.3.30 Array.prototype[@@iterator]()
+  var es6_array_iterator = require$$0$9(Array, 'Array', function (iterated, kind) {
+    this._t = toIObject(iterated); // target
+    this._i = 0;                   // next index
+    this._k = kind;                // kind
+  // 22.1.5.2.1 %ArrayIteratorPrototype%.next()
+  }, function () {
+    var O = this._t;
+    var kind = this._k;
+    var index = this._i++;
+    if (!O || index >= O.length) {
+      this._t = undefined;
+      return step(1);
+    }
+    if (kind == 'keys') return step(0, index);
+    if (kind == 'values') return step(0, O[index]);
+    return step(0, [index, O[index]]);
+  }, 'values');
+
+  // argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
+  Iterators.Arguments = Iterators.Array;
+
+  require$$1$2('keys');
+  require$$1$2('values');
+  require$$1$2('entries');
+
+  var es6_array_iterator$1 = /*#__PURE__*/Object.freeze({
+    default: es6_array_iterator,
+    __moduleExports: es6_array_iterator
+  });
+
+  var $iterators = ( es6_array_iterator$1 && es6_array_iterator ) || es6_array_iterator$1;
+
+  var ITERATOR$4 = require$$0$7('iterator');
+  var TO_STRING_TAG = require$$0$7('toStringTag');
+  var ArrayValues = Iterators.Array;
+
+  var DOMIterables = {
+    CSSRuleList: true, // TODO: Not spec compliant, should be false.
+    CSSStyleDeclaration: false,
+    CSSValueList: false,
+    ClientRectList: false,
+    DOMRectList: false,
+    DOMStringList: false,
+    DOMTokenList: true,
+    DataTransferItemList: false,
+    FileList: false,
+    HTMLAllCollection: false,
+    HTMLCollection: false,
+    HTMLFormElement: false,
+    HTMLSelectElement: false,
+    MediaList: true, // TODO: Not spec compliant, should be false.
+    MimeTypeArray: false,
+    NamedNodeMap: false,
+    NodeList: true,
+    PaintRequestList: false,
+    Plugin: false,
+    PluginArray: false,
+    SVGLengthList: false,
+    SVGNumberList: false,
+    SVGPathSegList: false,
+    SVGPointList: false,
+    SVGStringList: false,
+    SVGTransformList: false,
+    SourceBufferList: false,
+    StyleSheetList: true, // TODO: Not spec compliant, should be false.
+    TextTrackCueList: false,
+    TextTrackList: false,
+    TouchList: false
+  };
+
+  for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++) {
+    var NAME = collections[i];
+    var explicit = DOMIterables[NAME];
+    var Collection = require$$0[NAME];
+    var proto = Collection && Collection.prototype;
+    var key;
+    if (proto) {
+      if (!proto[ITERATOR$4]) require$$0$2(proto, ITERATOR$4, ArrayValues);
+      if (!proto[TO_STRING_TAG]) require$$0$2(proto, TO_STRING_TAG, NAME);
+      Iterators[NAME] = ArrayValues;
+      if (explicit) for (key in $iterators) if (!proto[key]) redefine(proto, key, $iterators[key], true);
+    }
+  }
+
+  var isEnum$1 = require$$0$c.f;
+  var _objectToArray = function (isEntries) {
+    return function (it) {
+      var O = toIObject(it);
+      var keys = getKeys(O);
+      var length = keys.length;
+      var i = 0;
+      var result = [];
+      var key;
+      while (length > i) if (isEnum$1.call(O, key = keys[i++])) {
+        result.push(isEntries ? [key, O[key]] : O[key]);
+      } return result;
+    };
+  };
+
+  var _objectToArray$1 = /*#__PURE__*/Object.freeze({
+    default: _objectToArray,
+    __moduleExports: _objectToArray
+  });
+
+  var require$$0$f = ( _objectToArray$1 && _objectToArray ) || _objectToArray$1;
+
+  // https://github.com/tc39/proposal-object-values-entries
+
+  var $values = require$$0$f(false);
+
+  $export$1($export$1.S, 'Object', {
+    values: function values(it) {
+      return $values(it);
+    }
+  });
+
+  // https://github.com/tc39/Array.prototype.includes
+
+  var $includes = require$$0$5(true);
+
+  $export$1($export$1.P, 'Array', {
+    includes: function includes(el /* , fromIndex = 0 */) {
+      return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
+    }
+  });
+
+  require$$1$2('includes');
+
+  // 7.2.8 IsRegExp(argument)
+
+
+  var MATCH = require$$0$7('match');
+  var _isRegexp = function (it) {
+    var isRegExp;
+    return isObject(it) && ((isRegExp = it[MATCH]) !== undefined ? !!isRegExp : cof(it) == 'RegExp');
+  };
+
+  var _isRegexp$1 = /*#__PURE__*/Object.freeze({
+    default: _isRegexp,
+    __moduleExports: _isRegexp
+  });
+
+  var isRegExp = ( _isRegexp$1 && _isRegexp ) || _isRegexp$1;
+
+  // helper for String#{startsWith, endsWith, includes}
+
+
+
+  var _stringContext = function (that, searchString, NAME) {
+    if (isRegExp(searchString)) throw TypeError('String#' + NAME + " doesn't accept regex!");
+    return String(defined(that));
+  };
+
+  var _stringContext$1 = /*#__PURE__*/Object.freeze({
+    default: _stringContext,
+    __moduleExports: _stringContext
+  });
+
+  var MATCH$1 = require$$0$7('match');
+  var _failsIsRegexp = function (KEY) {
+    var re = /./;
+    try {
+      '/./'[KEY](re);
+    } catch (e) {
+      try {
+        re[MATCH$1] = false;
+        return !'/./'[KEY](re);
+      } catch (f) { /* empty */ }
+    } return true;
+  };
+
+  var _failsIsRegexp$1 = /*#__PURE__*/Object.freeze({
+    default: _failsIsRegexp,
+    __moduleExports: _failsIsRegexp
+  });
+
+  var context = ( _stringContext$1 && _stringContext ) || _stringContext$1;
+
+  var require$$0$g = ( _failsIsRegexp$1 && _failsIsRegexp ) || _failsIsRegexp$1;
+
+  var INCLUDES = 'includes';
+
+  $export$1($export$1.P + $export$1.F * require$$0$g(INCLUDES), 'String', {
+    includes: function includes(searchString /* , position = 0 */) {
+      return !!~context(this, searchString, INCLUDES)
+        .indexOf(searchString, arguments.length > 1 ? arguments[1] : undefined);
+    }
+  });
+
   function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
   function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -1665,31 +1770,29 @@
   (function () {
 
     var LL_0 = 0;
-    var LL_ALL = LL_0;
     var LL_1 = 1;
-    var LL_LOG = LL_1;
     var LL_2 = 2;
-    var LL_INFO = LL_2;
     var LL_3 = 3;
-    var LL_WARN = LL_3;
     var LL_4 = 4;
-    var LL_ERROR = LL_4;
     var LL_5 = 5;
-    var LL_NONE = LL_5;
+    var logLevels = {
+      LL_ALL: LL_0,
+      LL_LOG: LL_1,
+      LL_INFO: LL_2,
+      LL_WARN: LL_3,
+      LL_ERROR: LL_4,
+      LL_NONE: LL_5
+    };
     var config = {
       timestamps: false,
-      logLevel: LL_ALL
+      logLevel: logLevels.LL_ALL
     };
     var orig = null;
 
     if (console && (typeof console === "undefined" ? "undefined" : _typeof(console)) === 'object') {
       orig = _objectSpread({}, console);
-      var augmentedConsole = {
-        LL_ALL: LL_ALL,
-        LL_WARN: LL_WARN,
-        LL_ERROR: LL_ERROR,
-        LL_NONE: LL_NONE,
 
+      var augmentedConsole = _objectSpread({}, logLevels, {
         /**
          * Configure the console functions
          * @param {Object} configObj Object with the new configuration
@@ -1714,9 +1817,7 @@
          * console.LL_ALL, console.LL_WARN, console.LL_ERROR, or console.LL_NONE
          */
         logLevel: function logLevel(level) {
-          if (![LL_ALL, LL_LOG, LL_INFO, LL_WARN, LL_ERROR, LL_NONE].some(function (l) {
-            return l === level;
-          })) {
+          if (!Object.values(logLevels).includes(level)) {
             // Invalid value
             console.error('Invalid log level value');
             return;
@@ -1765,7 +1866,7 @@
             args[_key] = arguments[_key];
           }
 
-          if (config.logLevel > LL_ALL) {
+          if (config.logLevel > logLevels.LL_ALL) {
             return;
           }
 
@@ -1787,7 +1888,7 @@
             args[_key2] = arguments[_key2];
           }
 
-          if (config.logLevel > LL_LOG) {
+          if (config.logLevel > logLevels.LL_LOG) {
             return;
           }
 
@@ -1809,7 +1910,7 @@
             args[_key3] = arguments[_key3];
           }
 
-          if (config.logLevel > LL_INFO) {
+          if (config.logLevel > logLevels.LL_INFO) {
             return;
           }
 
@@ -1831,7 +1932,7 @@
             args[_key4] = arguments[_key4];
           }
 
-          if (config.logLevel > LL_WARN) {
+          if (config.logLevel > logLevels.LL_WARN) {
             return;
           }
 
@@ -1853,7 +1954,7 @@
             args[_key5] = arguments[_key5];
           }
 
-          if (config.logLevel > LL_ERROR) {
+          if (config.logLevel > logLevels.LL_ERROR) {
             return;
           }
 
@@ -1864,7 +1965,7 @@
           return (_orig6 = orig).error.apply(_orig6, _toConsumableArray(args));
         } // Overwrite the console object with our updates
 
-      };
+      });
 
       for (var k in augmentedConsole) {
         console[k] = augmentedConsole[k];

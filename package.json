@@ -1,6 +1,6 @@
 {
   "name": "console-augmenter",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Augments logging via the console object with log levels and other useful stuff",
   "main": "dist/bundle.js",
   "author": "Ronald Toussaint",
